@@ -1,5 +1,5 @@
 import {Recipe} from './recipe.model';
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Ingredient} from '../shared/ingredient.model';
 import {ShoppingListService} from '../shopping-list/shopping-list.service';
 import {Subject} from 'rxjs';
@@ -53,6 +53,11 @@ export class RecipeService {
 
   deleteRecipe(index: number) {
     this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  setRecipes(fetchedRecipes: Recipe[]) {
+    this.recipes = fetchedRecipes;
     this.recipesChanged.next(this.recipes.slice());
   }
 
